@@ -1,19 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gusto</title>
-    <meta name="description" content="Gusto Special Foods">
-    <meta name="author" content="inserveofod">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css"  href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css"  href="css/style.css">
-<!--    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">-->
-<!--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">-->
-<!--    <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet">-->
-</head>
+<?php
+require_once 'init.php';
+
+$database = new Database(DB, DB_USER, DB_PASS);
+$fetcher = new DatabaseFetcher($database);
+$imager = new DatabaseImager($database);
+
+$fetcher->all();
+
+$about = $database->getAbout();
+$chef = $database->getChef();
+$contact_info = $database->getContactInfo();
+$gallery = $database->getGallery();
+$header = $database->getHeader();
+$menu_types = $database->getMenuTypes();
+
+$social_media = $database->getSocialMedia();
+$specials = $database->getSpecials();
+
+include_once 'header.php';
+?>
+
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 <!-- Navigation
     ==========================================-->
@@ -32,6 +38,7 @@
                 <li><a href="#restaurant-menu" class="page-scroll">Menu</a></li>
                 <li><a href="#team" class="page-scroll">Chef</a></li>
                 <li><a href="#contact" class="page-scroll">Contact</a></li>
+                <li><a href="login.php" class="page-scroll">Login</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -44,8 +51,11 @@
             <div class="container">
                 <div class="row">
                     <div class="intro-text">
-                        <h1>Gusto</h1>
-                        <p>Reservations: (887) 654-3210</p>
+                            <h1 class="text-capitalize"><?php echo $header['title']?></h1>
+                            <p>Reservations: <?php echo $contact_info['phone_number'] ?></p>
+                        <?php
+                            $imager->image($header['image'], HEADER_IMAGE);
+                        ?>
                     </div>
                 </div>
             </div>
@@ -59,27 +69,24 @@
             <h2>Our Specials</h2>
         </div>
         <div class="row">
+            <?php
+            $image_specials = [SPECIALS_IMAGE_1, SPECIALS_IMAGE_2, SPECIALS_IMAGE_3];
+            $specials_count = count($image_specials);
+
+            for ($i = 0; $i < $specials_count; $i++){
+                $imager->image($specials[$i]['image'], $image_specials[$i]);
+            ?>
             <div class="col-xs-12 col-sm-4">
                 <div class="features-item">
-                    <h3>Lorem ipsum dolor</h3>
-                    <img src="img/specials/1.jpg" class="img-responsive" alt="">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sed commodo.</p>
+                    <h3 class="text-capitalize"><?php echo $specials[$i]['title']?></h3>
+                    <img src="<?php echo 'img/' . basename($image_specials[$i]) ?>" class="img-responsive" alt="special">
+                    <?php echo $image_specials[$i] ?>
+                    <p><?php echo $specials[$i]['description']?></p>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
-                <div class="features-item">
-                    <h3>Consectetur adipiscing</h3>
-                    <img src="img/specials/2.jpg" class="img-responsive" alt="">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sed commodo.</p>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-                <div class="features-item">
-                    <h3>Duis sed dapibus</h3>
-                    <img src="img/specials/3.jpg" class="img-responsive" alt="">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sed commodo.</p>
-                </div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
@@ -93,8 +100,10 @@
                     <div class="section-title">
                         <h2>Our Story</h2>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
+                    <p>
+                        <?php $imager->image($about['image'], ABOUT_IMAGE)?>
+                        <?php echo $about['story']?>
+                    </p>
                 </div>
             </div>
         </div>
@@ -107,127 +116,57 @@
             <h2>Menu</h2>
         </div>
         <div class="row">
+            <?php
+            foreach ($menu_types as $menu_type) {
+                $type = $menu_type['menu_type'];
+                $fetcher->menus_by_type($type);
+                $menus = $database->getMenus();
+            ?>
+
             <div class="col-xs-12 col-sm-6">
                 <div class="menu-section">
-                    <h2 class="menu-section-title">Breakfast & Starters</h2>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Tortellini Skewers</div>
-                        <div class="menu-item-price"> $9 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Fried Ravioli</div>
-                        <div class="menu-item-price"> $7 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Wild Mushroom Arancini</div>
-                        <div class="menu-item-price"> $9 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Mozzarella Sticks</div>
-                        <div class="menu-item-price"> $10 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
+                    <h2 class="menu-section-title text-uppercase"><?php echo $type?></h2>
+                    <?php
+                        foreach ($menus as $menu) {
+                    ?>
+                        <div class="menu-item">
+                            <div class="menu-item-name"><?php echo $menu['title']?></div>
+                            <div class="menu-item-price"> <?php echo $menu['price']?> </div>
+                            <div class="menu-item-description"> <?php echo $menu['description']?> </div>
+                        </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="menu-section">
-                    <h2 class="menu-section-title">Main Course</h2>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Roast Stuffed Chicken</div>
-                        <div class="menu-item-price"> $18 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Chicken & Mushroom Pasta</div>
-                        <div class="menu-item-price"> $20 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Beef Lasagne</div>
-                        <div class="menu-item-price"> $14 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Chicken Goujons</div>
-                        <div class="menu-item-price"> $19 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <div class="menu-section">
-                    <h2 class="menu-section-title">Dinner</h2>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Sesame-Ginger Beef</div>
-                        <div class="menu-item-price"> $15 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Crispy Fried Chicken</div>
-                        <div class="menu-item-price"> $17 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Mongolian Shrimp & Broccoli</div>
-                        <div class="menu-item-price"> $18 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam.. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Spicy Coconut Salmon</div>
-                        <div class="menu-item-price"> $20 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="menu-section">
-                    <h2 class="menu-section-title">Desserts</h2>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Chocolate Mud Cake</div>
-                        <div class="menu-item-price"> $11 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Bourbon-Pecan Tart</div>
-                        <div class="menu-item-price"> $14 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Texas Sheet Cake</div>
-                        <div class="menu-item-price"> $15 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name">Vanilla Cheesecake</div>
-                        <div class="menu-item-price"> $18 </div>
-                        <div class="menu-item-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, duis sed dapibus leo nec ornare diam. </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
 <!-- Gallery Section -->
+
+<?php
+$gallery_images = [GALLERY_IMAGE_1, GALLERY_IMAGE_2, GALLERY_IMAGE_3, GALLERY_IMAGE_4];
+$image_count = count($gallery_images);
+
+?>
+
 <div id="gallery">
     <div class="container-fluid">
         <div class="row">
+            <?php
+            for ($i = 0; $i < $image_count; $i++) {
+                $imager->image($gallery[$i]['image'], $gallery_images[$i]);
+            ?>
+
             <div class="col-xs-6 col-md-3">
-                <div class="gallery-item"> <img src="img/gallery/01.jpg" class="img-responsive" alt=""></div>
+                <div class="gallery-item"> <img src="<?php echo 'img/' . basename( $gallery_images[$i])?>" class="img-responsive" alt=""></div>
             </div>
-            <div class="col-xs-6 col-md-3">
-                <div class="gallery-item"> <img src="img/gallery/02.jpg" class="img-responsive" alt=""></div>
-            </div>
-            <div class="col-xs-6 col-md-3">
-                <div class="gallery-item"> <img src="img/gallery/03.jpg" class="img-responsive" alt=""></div>
-            </div>
-            <div class="col-xs-6 col-md-3">
-                <div class="gallery-item"> <img src="img/gallery/04.jpg" class="img-responsive" alt=""></div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
@@ -238,14 +177,18 @@
             <div class="col-md-6">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="section-title">
-                        <h2>Meet Our Chef</h2>
+                        <h2 class="text-uppercase"><?php echo $chef['title']?></h2>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
+                    <p>
+                        <?php echo $chef['description']?>
+                    </p>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="team-img"><img src="img/chef.jpg" alt="..."></div>
+                <?php
+                $imager->image($chef['image'], CHEF_IMAGE);
+                ?>
+                <div class="team-img"><img src="img/chef.jpeg" alt="chef"></div>
             </div>
         </div>
     </div>
@@ -257,21 +200,29 @@
             <h3>Reservations</h3>
             <div class="contact-item">
                 <p>Please call</p>
-                <p>(887) 654-3210</p>
+                <p><?php echo $contact_info['phone_number']?></p>
             </div>
         </div>
         <div class="col-md-4">
             <h3>Address</h3>
             <div class="contact-item">
-                <p>4321 California St,</p>
-                <p>San Francisco, CA 12345</p>
+                <p>
+                    <?php echo $contact_info['address']?>
+                </p>
             </div>
         </div>
         <div class="col-md-4">
             <h3>Opening Hours</h3>
             <div class="contact-item">
-                <p>Mon-Thurs: 10:00 AM - 11:00 PM</p>
-                <p>Fri-Sun: 11:00 AM - 02:00 AM</p>
+                <?php
+                    $week_work_from = strtotime($contact_info['week_work_from']);
+                    $week_work_to = strtotime($contact_info['week_work_to']);
+                    $weekend_work_from = strtotime($contact_info['weekend_work_from']);
+                    $weekend_work_to = strtotime($contact_info['weekend_work_to']);
+                ?>
+
+                <p>Mon-Thurs: <?php echo date('h:i', $week_work_from) ?> AM - <?php echo date('h:i', $week_work_to)?> PM</p>
+                <p>Fri-Sun: <?php echo date('h:i', $weekend_work_from) ?> AM - <?php echo date('h:i', $weekend_work_to)?> AM</p>
             </div>
         </div>
     </div>
@@ -280,26 +231,26 @@
             <h3>Send us a message</h3>
         </div>
         <div class="col-md-8 col-md-offset-2">
-            <form name="sentMessage" id="contactForm" novalidate>
+            <form name="sentMessage" id="contactForm" action="contact.php" method="post">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name"></label>
-                            <input type="text" id="name" class="form-control" placeholder="Name" required="required">
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Name" required="required" maxlength="128" minlength="3">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email"></label>
-                            <input type="email" id="email" class="form-control" placeholder="Email" required="required">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="required" maxlength="255" minlength="5">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="message"></label>
-                    <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+                    <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required maxlength="255"></textarea>
                     <p class="help-block text-danger"></p>
                 </div>
                 <div id="success"></div>
@@ -316,9 +267,9 @@
         <div class="col-md-6">
             <div class="social">
                 <ul>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                    <li><a href="<?php echo $social_media['facebook'] ?? '#'?>"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="<?php echo $social_media['instagram'] ?? '#'?>"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="<?php echo $social_media['youtube'] ?? '#'?>"><i class="fa fa-youtube"></i></a></li>
                 </ul>
             </div>
         </div>
