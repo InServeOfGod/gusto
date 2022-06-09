@@ -31,7 +31,7 @@ class DatabaseFetcher {
      * @param bool $many
      * @return array|false
      */
-    private function fetcher(string $query, bool $many = false) {
+    private function executor(string $query, bool $many = false) {
         $stmt = $this->pdo->prepare($query);
 
         if ($stmt) {
@@ -49,77 +49,77 @@ class DatabaseFetcher {
      * @return void
      */
     public function about() {
-        $this->database->setAbout($this->fetcher("SELECT * FROM about LIMIT 1"));
+        $this->database->setAbout($this->executor("SELECT * FROM about LIMIT 1"));
     }
 
     /**
      * @return void
      */
     public function chef() {
-        $this->database->setChef($this->fetcher("SELECT * FROM chef LIMIT 1"));
+        $this->database->setChef($this->executor("SELECT * FROM chef LIMIT 1"));
     }
 
     /**
      * @return void
      */
     public function contact() {
-        $this->database->setContact($this->fetcher("SELECT * FROM contact", true));
+        $this->database->setContact($this->executor("SELECT * FROM contact", true));
     }
 
     /**
      * @return void
      */
     public function contactInfo() {
-        $this->database->setContactInfo($this->fetcher("SELECT * FROM contact_info LIMIT 1"));
+        $this->database->setContactInfo($this->executor("SELECT * FROM contact_info LIMIT 1"));
     }
 
     /**
      * @return void
      */
     public function gallery() {
-        $this->database->setGallery($this->fetcher("SELECT * FROM gallery LIMIT 4", true));
+        $this->database->setGallery($this->executor("SELECT * FROM gallery LIMIT 4", true));
     }
 
     /**
      * @return void
      */
     public function header() {
-        $this->database->setHeader($this->fetcher("SELECT * FROM header LIMIT 1"));
+        $this->database->setHeader($this->executor("SELECT * FROM header LIMIT 1"));
     }
 
     /**
      * @return void
      */
     public function menus() {
-        $this->database->setMenus($this->fetcher("SELECT mt.menu_type, m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id", true));
+        $this->database->setMenus($this->executor("SELECT mt.menu_type, m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id", true));
     }
 
     /**
      * @return void
      */
     public function menu_types() {
-        $this->database->setMenuTypes($this->fetcher("SELECT menu_type FROM menu_types", true));
+        $this->database->setMenuTypes($this->executor("SELECT menu_type FROM menu_types", true));
     }
 
     /**
      * @return void
      */
     public function social_media() {
-        $this->database->setSocialMedia($this->fetcher("SELECT * FROM social_media LIMIT 1"));
+        $this->database->setSocialMedia($this->executor("SELECT * FROM social_media LIMIT 1"));
     }
 
     /**
      * @return void
      */
     public function specials() {
-        $this->database->setSpecials($this->fetcher("SELECT * FROM specials LIMIT 3", true));
+        $this->database->setSpecials($this->executor("SELECT * FROM specials LIMIT 3", true));
     }
 
     /**
      * @return void
      */
     public function user() {
-        $this->database->setUser($this->fetcher("SELECT * FROM user LIMIT 1"));
+        $this->database->setUser($this->executor("SELECT * FROM user LIMIT 1"));
     }
 
     /**
@@ -127,7 +127,7 @@ class DatabaseFetcher {
      * @return void
      */
     public function menus_by_type(string $type) {
-        $this->database->setMenus($this->fetcher("SELECT m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id WHERE mt.menu_type = '$type'", true));
+        $this->database->setMenus($this->executor("SELECT m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id WHERE mt.menu_type = '$type'", true));
     }
 
     public function all() {

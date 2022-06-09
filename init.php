@@ -3,6 +3,9 @@
 require_once 'Database.php';
 require_once 'DatabaseFetcher.php';
 require_once 'DatabaseImager.php';
+require_once 'DatabaseInserter.php';
+require_once 'DatabaseUpdater.php';
+require_once 'DatabaseDeleter.php';
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 

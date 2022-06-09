@@ -1,8 +1,11 @@
 <?php
 require_once 'init.php';
 
+// TODO : do not use blob because we do not need it
+
 $database = new Database(DB, DB_USER, DB_PASS);
 $fetcher = new DatabaseFetcher($database);
+$inserter = new DatabaseInserter($database);
 $imager = new DatabaseImager($database);
 
 $fetcher->all();
@@ -80,7 +83,6 @@ include_once 'header.php';
                 <div class="features-item">
                     <h3 class="text-capitalize"><?php echo $specials[$i]['title']?></h3>
                     <img src="<?php echo 'img/' . basename($image_specials[$i]) ?>" class="img-responsive" alt="special">
-                    <?php echo $image_specials[$i] ?>
                     <p><?php echo $specials[$i]['description']?></p>
                 </div>
             </div>
@@ -231,7 +233,18 @@ $image_count = count($gallery_images);
             <h3>Send us a message</h3>
         </div>
         <div class="col-md-8 col-md-offset-2">
-            <form name="sentMessage" id="contactForm" action="contact.php" method="post">
+            <?php
+            if (isset($_POST['contact-submit'])) {
+                // no need to use regex or any validation for XSS or SQL injection because htmlspecialchars does the work
+                $name = htmlspecialchars($_POST['name']);
+                $email = htmlspecialchars($_POST['email']);
+                $msg = htmlspecialchars($_POST['message']);
+
+                $inserter->contact([$name, $email, $msg]);
+            }
+            ?>
+
+            <form name="sentMessage" id="contactForm" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -254,7 +267,7 @@ $image_count = count($gallery_images);
                     <p class="help-block text-danger"></p>
                 </div>
                 <div id="success"></div>
-                <button type="submit" class="btn btn-custom btn-lg">Send Message</button>
+                <button type="submit" class="btn btn-custom btn-lg" name="contact-submit">Send Message</button>
             </form>
         </div>
     </div>
