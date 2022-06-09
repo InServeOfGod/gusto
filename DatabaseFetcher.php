@@ -91,14 +91,14 @@ class DatabaseFetcher {
      * @return void
      */
     public function menus() {
-        $this->database->setMenus($this->executor("SELECT mt.menu_type, m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id", true));
+        $this->database->setMenus($this->executor("SELECT m.id, mt.menu_type, m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id", true));
     }
 
     /**
      * @return void
      */
     public function menu_types() {
-        $this->database->setMenuTypes($this->executor("SELECT menu_type FROM menu_types", true));
+        $this->database->setMenuTypes($this->executor("SELECT * FROM menu_types", true));
     }
 
     /**
@@ -127,7 +127,7 @@ class DatabaseFetcher {
      * @return void
      */
     public function menus_by_type(string $type) {
-        $this->database->setMenus($this->executor("SELECT m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id WHERE mt.menu_type = '$type'", true));
+        $this->database->setMenus($this->executor("SELECT m.id m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id WHERE mt.menu_type = '$type'", true));
     }
 
     public function all() {

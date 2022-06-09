@@ -1,12 +1,9 @@
 <?php
 require_once 'init.php';
 
-// TODO : do not use blob because we do not need it
-
 $database = new Database(DB, DB_USER, DB_PASS);
 $fetcher = new DatabaseFetcher($database);
 $inserter = new DatabaseInserter($database);
-$imager = new DatabaseImager($database);
 
 $fetcher->all();
 
@@ -49,16 +46,13 @@ include_once 'header.php';
 </nav>
 <!-- Header -->
 <header id="header">
-    <div class="intro">
+    <div class="intro" style="background-image: url('img/<?php echo $header['photo']?>')">
         <div class="overlay">
             <div class="container">
                 <div class="row">
                     <div class="intro-text">
-                            <h1 class="text-capitalize"><?php echo $header['title']?></h1>
-                            <p>Reservations: <?php echo $contact_info['phone_number'] ?></p>
-                        <?php
-                            $imager->image($header['image'], HEADER_IMAGE);
-                        ?>
+                        <h1 class="text-capitalize"><?php echo $header['title']?></h1>
+                        <p>Reservations: <?php echo $contact_info['phone_number'] ?></p>
                     </div>
                 </div>
             </div>
@@ -73,17 +67,13 @@ include_once 'header.php';
         </div>
         <div class="row">
             <?php
-            $image_specials = [SPECIALS_IMAGE_1, SPECIALS_IMAGE_2, SPECIALS_IMAGE_3];
-            $specials_count = count($image_specials);
-
-            for ($i = 0; $i < $specials_count; $i++){
-                $imager->image($specials[$i]['image'], $image_specials[$i]);
+            foreach ($specials as $special) {
             ?>
             <div class="col-xs-12 col-sm-4">
                 <div class="features-item">
-                    <h3 class="text-capitalize"><?php echo $specials[$i]['title']?></h3>
-                    <img src="<?php echo 'img/' . basename($image_specials[$i]) ?>" class="img-responsive" alt="special">
-                    <p><?php echo $specials[$i]['description']?></p>
+                    <h3 class="text-capitalize"><?php echo $special['title']?></h3>
+                    <img src="<?php echo 'img/' . $special['photo'] ?>" class="img-responsive" alt="special">
+                    <p><?php echo $special['description']?></p>
                 </div>
             </div>
             <?php
@@ -96,14 +86,13 @@ include_once 'header.php';
 <div id="about">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12 col-md-6 about-img"> </div>
+            <div class="col-xs-12 col-md-6 about-img" style="background-image: url('img/<?php echo $about['photo']?>')"></div>
             <div class="col-xs-12 col-md-3 col-md-offset-1">
                 <div class="about-text">
                     <div class="section-title">
                         <h2>Our Story</h2>
                     </div>
                     <p>
-                        <?php $imager->image($about['image'], ABOUT_IMAGE)?>
                         <?php echo $about['story']?>
                     </p>
                 </div>
@@ -133,7 +122,7 @@ include_once 'header.php';
                     ?>
                         <div class="menu-item">
                             <div class="menu-item-name"><?php echo $menu['title']?></div>
-                            <div class="menu-item-price"> <?php echo $menu['price']?> </div>
+                            <div class="menu-item-price"> <?php echo $menu['price']?>$</div>
                             <div class="menu-item-description"> <?php echo $menu['description']?> </div>
                         </div>
                     <?php
@@ -148,23 +137,15 @@ include_once 'header.php';
     </div>
 </div>
 <!-- Gallery Section -->
-
-<?php
-$gallery_images = [GALLERY_IMAGE_1, GALLERY_IMAGE_2, GALLERY_IMAGE_3, GALLERY_IMAGE_4];
-$image_count = count($gallery_images);
-
-?>
-
 <div id="gallery">
     <div class="container-fluid">
         <div class="row">
             <?php
-            for ($i = 0; $i < $image_count; $i++) {
-                $imager->image($gallery[$i]['image'], $gallery_images[$i]);
+                foreach ($gallery as $gal) {
             ?>
 
             <div class="col-xs-6 col-md-3">
-                <div class="gallery-item"> <img src="<?php echo 'img/' . basename( $gallery_images[$i])?>" class="img-responsive" alt=""></div>
+                <div class="gallery-item"> <img src="<?php echo 'img/' . $gal['photo'] ?>" class="img-responsive" alt=""></div>
             </div>
             <?php
             }
@@ -187,10 +168,9 @@ $image_count = count($gallery_images);
                 </div>
             </div>
             <div class="col-md-6">
-                <?php
-                $imager->image($chef['image'], CHEF_IMAGE);
-                ?>
-                <div class="team-img"><img src="img/chef.jpeg" alt="chef"></div>
+                <div class="team-img">
+                    <img src="img/<?= $chef['photo']?>" alt="chef">
+                </div>
             </div>
         </div>
     </div>
