@@ -49,7 +49,7 @@ class DatabaseInserter
      */
     public function about(array $data): bool
     {
-        return $this->executor("INSERT INTO about (story, image) VALUES (?, ?)", $data);
+        return $this->executor("INSERT INTO about (story, photo) VALUES (?, ?)", $data);
     }
 
     /**
@@ -58,7 +58,7 @@ class DatabaseInserter
      */
     public function chef(array $data): bool
     {
-        return $this->executor("INSERT INTO chef (title, description, image) VALUES (?,?,?)", $data);
+        return $this->executor("INSERT INTO chef (title, description, photo) VALUES (?,?,?)", $data);
     }
 
     /**
@@ -85,7 +85,7 @@ class DatabaseInserter
      */
     public function gallery(array $data): bool
     {
-        return $this->executor("INSERT INTO gallery (image) VALUES (?)", $data);
+        return $this->executor("INSERT INTO gallery (photo) VALUES (?)", $data);
     }
 
     /**
@@ -94,7 +94,7 @@ class DatabaseInserter
      */
     public function header(array $data): bool
     {
-        return $this->executor("INSERT INTO header (title, image) VALUES (?, ?)", $data);
+        return $this->executor("INSERT INTO header (title, photo) VALUES (?, ?)", $data);
     }
 
     /**
@@ -130,6 +130,33 @@ class DatabaseInserter
      */
     public function specials(array $data): bool
     {
-        return $this->executor("INSERT INTO specials (title, image, description) VALUES (?, ?, ?)", $data);
+        return $this->executor("INSERT INTO specials (title, photo, description) VALUES (?, ?, ?)", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function todo(array $data): bool
+    {
+        return $this->executor("INSERT INTO todo_list (todo, done, timestamp) VALUES (?, ?, ?)", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function profits(array $data): bool
+    {
+        return $this->executor("INSERT INTO profits (profit, loss, day) VALUES (?, ?, ?)", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function visitors(array $data): bool
+    {
+        return $this->executor("INSERT INTO visitors (visitor_ip) VALUES (?)", $data);
     }
 }

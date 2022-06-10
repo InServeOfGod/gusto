@@ -13,6 +13,9 @@ class Database {
     private array $social_media;
     private array $specials;
     private array $user;
+    private array $profits;
+    private array $todo;
+    private array $visitors;
 
     private string $error;
     private string $host;
@@ -350,5 +353,54 @@ class Database {
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getProfits(): array
+    {
+        return $this->profits;
+    }
+
+    /**
+     * @param array $profits
+     */
+    public function setProfits(array $profits): void
+    {
+        $this->profits = $profits;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTodo(): array
+    {
+        return $this->todo;
+    }
+
+    /**
+     * @param array $todo
+     */
+    public function setTodo(array $todo): void
+    {
+        $this->todo = $todo;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVisitors(): array
+    {
+        return $this->visitors;
+    }
+
+    /**
+     * @param array $visitors
+     */
+    public function setVisitors(array $visitors): void
+    {
+        $this->visitors = $visitors;
     }
 }

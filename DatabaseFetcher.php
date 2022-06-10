@@ -123,6 +123,27 @@ class DatabaseFetcher {
     }
 
     /**
+     * @return void
+     */
+    public function todo() {
+        $this->database->setTodo($this->executor("SELECT * FROM todo_list", true));
+    }
+
+    /**
+     * @return void
+     */
+    public function profits() {
+        $this->database->setTodo($this->executor("SELECT * FROM profits", true));
+    }
+
+    /**
+     * @return void
+     */
+    public function visitors() {
+        $this->database->setTodo($this->executor("SELECT * FROM visitors", true));
+    }
+
+    /**
      * @param string $type
      * @return void
      */
@@ -138,6 +159,9 @@ class DatabaseFetcher {
         $this->gallery();
         $this->header();
 //        $this->menus();
+//        $this->todo();
+//        $this->profits();
+//        $this->visitors();
         $this->menu_types();
         $this->social_media();
         $this->specials();

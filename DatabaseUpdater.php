@@ -49,7 +49,7 @@ class DatabaseUpdater
      */
     public function about(array $data): bool
     {
-        return $this->executor("UPDATE about SET story = ?, image = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE about SET story = ?, photo = ? WHERE id = ?", $data);
     }
 
     /**
@@ -58,7 +58,7 @@ class DatabaseUpdater
      */
     public function chef(array $data): bool
     {
-        return $this->executor("UPDATE chef SET title = ?, description = ?, image = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE chef SET title = ?, description = ?, photo = ? WHERE id = ?", $data);
     }
 
     /**
@@ -85,7 +85,7 @@ class DatabaseUpdater
      */
     public function gallery(array $data): bool
     {
-        return $this->executor("UPDATE gallery SET image = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE gallery SET photo = ? WHERE id = ?", $data);
     }
 
     /**
@@ -94,7 +94,7 @@ class DatabaseUpdater
      */
     public function header(array $data): bool
     {
-        return $this->executor("UPDATE header SET title = ?, image = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE header SET title = ?, photo = ? WHERE id = ?", $data);
     }
 
     /**
@@ -130,6 +130,42 @@ class DatabaseUpdater
      */
     public function specials(array $data): bool
     {
-        return $this->executor("UPDATE specials SET title = ?, image = ?, description = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE specials SET title = ?, photo = ?, description = ? WHERE id = ?", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function user(array $data): bool
+    {
+        return $this->executor("UPDATE user SET username = ?, password = ?, updated_at = current_timestamp(), photo = ? WHERE id = ?", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function profits(array $data): bool
+    {
+        return $this->executor("UPDATE profits SET profit = ?, loss = ?, day = ? WHERE id = ?", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function todo(array $data): bool
+    {
+        return $this->executor("UPDATE todo_list SET todo = ?, done = ?, timestamp = ? WHERE id = ?", $data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function visitors(array $data): bool
+    {
+        return $this->executor("UPDATE visitors SET visitor_ip = ? WHERE id = ?", $data);
     }
 }

@@ -132,4 +132,31 @@ class DatabaseDeleter
     {
         return $this->executor("DELETE FROM specials WHERE id = ?", $id);
     }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function todo(int $id): bool
+    {
+        return $this->executor("DELETE FROM todo_list WHERE id = ?", $id);
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function profits(int $id): bool
+    {
+        return $this->executor("DELETE FROM profits WHERE id = ?", $id);
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function visitors(int $id): bool
+    {
+        return $this->executor("DELETE FROM visitors WHERE id = ?", $id);
+    }
 }
