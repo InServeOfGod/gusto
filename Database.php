@@ -68,6 +68,22 @@ class Database {
     }
 
     /**
+     * @param string $query
+     * @param array $params
+     * @return bool
+     */
+    public function query(string $query, array $params = []): bool
+    {
+        $stmt = $this->pdo->prepare($query);
+
+        if ($stmt) {
+            return $stmt->execute($params);
+        }
+
+        return false;
+    }
+
+    /**
      * @return array
      */
     public function getAbout(): array

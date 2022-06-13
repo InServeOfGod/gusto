@@ -1,10 +1,13 @@
 <?php
+
+$_GET['page'] = 'Dashboard';
+
 include_once "layouts/header.php";
 ?>
 
 <div class="wrapper">
     <header class="main-header">
-        <a href="index.php?page=Dashboard" class="logo text-capitalize"><b><?= $user['username'] ?></b></a>
+        <a href="index.php" class="logo text-capitalize"><b><?= $user['username'] ?></b></a>
         <?php
             include_once "layouts/navbar.php";
         ?>
@@ -20,7 +23,7 @@ include_once "layouts/header.php";
                 <small>Control panel</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="index.php?page=Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active"><?= $_GET['page'] ?? null?></li>
             </ol>
         </section>
@@ -36,7 +39,7 @@ include_once "layouts/header.php";
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="menus-module.php?page=Menus" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="menus-module.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
@@ -48,7 +51,7 @@ include_once "layouts/header.php";
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="profits-module.php?page=Profits" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="profits-module.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
@@ -60,7 +63,7 @@ include_once "layouts/header.php";
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="contact-module.php?page=Contacts" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="contact-module.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
@@ -72,7 +75,7 @@ include_once "layouts/header.php";
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="visitors-module.php?page=Visitors" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="visitors-module.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -96,7 +99,7 @@ include_once "layouts/header.php";
                                 foreach (array_slice($todo, 0, 5) as $todo_item) {
                                     ?>
                                     <li>
-                                        <a href="todo_list-module.php?page=Todo&action=show&id=<?= $todo_item['id']?>">
+                                        <a href="todo_list-module.php?action=show&id=<?= $todo_item['id']?>">
                                             <h3>
                                                 <?= $todo_item['todo']?>
                                                 <span class="pull-right"><?php ($todo_item['done']) ? print '&check' : print '&times'?></span>
@@ -112,7 +115,7 @@ include_once "layouts/header.php";
                             </ul>
                         </div>
                         <div class="box-footer clearfix no-border">
-                            <a class="btn btn-default pull-right" href="todo_list-module.php?page=Todo&action=create">
+                            <a class="btn btn-default pull-right" href="todo_list-module.php?action=create">
                                 <i class="fa fa-plus"></i> Add item
                             </a>
                         </div>
@@ -130,7 +133,7 @@ include_once "layouts/header.php";
                                 ?>
                                 <li class="item">
                                     <div class="product-info">
-                                        <a href="menus-module.php?page=Menus&action=show&id=<?= $menu['id']?>" class="product-title">
+                                        <a href="menus-module.php?action=show&id=<?= $menu['id']?>" class="product-title">
                                             <?= $menu['title']?>
                                             <span class="label label-primary pull-right">$<?= $menu['price']?></span>
                                         </a>
@@ -143,7 +146,7 @@ include_once "layouts/header.php";
                             </ul>
                         </div>
                         <div class="box-footer text-center">
-                            <a href="menus-module.php?page=Menus" class="uppercase">View All Products</a>
+                            <a href="menus-module.php" class="uppercase">View All Products</a>
                         </div>
                     </div>
                 </section>

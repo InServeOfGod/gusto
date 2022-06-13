@@ -67,7 +67,7 @@ class DatabaseInserter
      */
     public function contact(array $data): bool
     {
-        return $this->executor("INSERT INTO contact (name, email, msg) VALUES (?, ?, ?)", $data);
+        return $this->executor("INSERT INTO contact (name, email, msg, created_at) VALUES (?, ?, ?, ?)", $data);
     }
 
     /**

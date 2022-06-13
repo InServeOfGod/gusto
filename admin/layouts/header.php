@@ -5,7 +5,7 @@ require_once '../init.php';
 $database = new Database(DB, DB_USER, DB_PASS);
 $fetcher = new DatabaseFetcher($database);
 $inserter = new DatabaseInserter($database);
-$updated = new DatabaseUpdater($database);
+$updater = new DatabaseUpdater($database);
 $deleter = new DatabaseDeleter($database);
 
 $fetcher->user();

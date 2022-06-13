@@ -1,10 +1,13 @@
 <?php
+$_GET['page'] = 'Gallery';
+
+
 include_once "layouts/header.php";
 ?>
 
     <div class="wrapper">
     <header class="main-header">
-        <a href="index.php?page=Dashboard" class="logo text-capitalize"><b><?= $user['username'] ?></b></a>
+        <a href="index.php" class="logo text-capitalize"><b><?= $user['username'] ?></b></a>
         <?php
         include_once "layouts/navbar.php";
         ?>

@@ -140,7 +140,7 @@ class DatabaseFetcher {
      * @return void
      */
     public function visitors() {
-        $this->database->setTodo($this->executor("SELECT * FROM visitors", true));
+        $this->database->setVisitors($this->executor("SELECT * FROM visitors", true));
     }
 
     /**
@@ -148,7 +148,7 @@ class DatabaseFetcher {
      * @return void
      */
     public function menus_by_type(string $type) {
-        $this->database->setMenus($this->executor("SELECT m.id m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id WHERE mt.menu_type = '$type'", true));
+        $this->database->setMenus($this->executor("SELECT m.id, m.title, m.description, m.price FROM menus m JOIN menu_types mt on mt.id = m.menu_type_id WHERE mt.menu_type = '$type'", true));
     }
 
     public function all() {

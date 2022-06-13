@@ -1,13 +1,35 @@
 <?php
+session_start();
+$ip = null;
+
+if (!$_SESSION['client']) {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $_SESSION['client'] = true;
+}
+
+$_GET['page'] = 'Home';
+
 require_once 'init.php';
 
 $database = new Database(DB, DB_USER, DB_PASS);
 $fetcher = new DatabaseFetcher($database);
 $inserter = new DatabaseInserter($database);
 
+/*
+ * check for new unique visitors
+ * */
+
+if ($ip !== null) {
+    @$inserter->visitors([$ip]);
+}
+
+/*
+ * get page contents from database
+ * */
+
 $fetcher->all();
 
-$about = $database->getAbout();
+$contact = $database->getAbout();
 $chef = $database->getChef();
 $contact_info = $database->getContactInfo();
 $gallery = $database->getGallery();
@@ -86,14 +108,14 @@ include_once 'header.php';
 <div id="about">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12 col-md-6 about-img" style="background-image: url('img/<?php echo $about['photo']?>')"></div>
+            <div class="col-xs-12 col-md-6 about-img" style="background-image: url('img/<?php echo $contact['photo']?>')"></div>
             <div class="col-xs-12 col-md-3 col-md-offset-1">
                 <div class="about-text">
                     <div class="section-title">
                         <h2>Our Story</h2>
                     </div>
                     <p>
-                        <?php echo $about['story']?>
+                        <?php echo $contact['story']?>
                     </p>
                 </div>
             </div>
@@ -110,6 +132,7 @@ include_once 'header.php';
             <?php
             foreach ($menu_types as $menu_type) {
                 $type = $menu_type['menu_type'];
+                echo $type;
                 $fetcher->menus_by_type($type);
                 $menus = $database->getMenus();
             ?>
@@ -260,9 +283,9 @@ include_once 'header.php';
         <div class="col-md-6">
             <div class="social">
                 <ul>
-                    <li><a href="<?php echo $social_media['facebook'] ?? '#'?>"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="<?php echo $social_media['instagram'] ?? '#'?>"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="<?php echo $social_media['youtube'] ?? '#'?>"><i class="fa fa-youtube"></i></a></li>
+                    <li><a href="<?php echo $social_media['facebook'] ?? '#'?>" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="<?php echo $social_media['instagram'] ?? '#'?>" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="<?php echo $social_media['youtube'] ?? '#'?>" target="_blank"><i class="fa fa-youtube"></i></a></li>
                 </ul>
             </div>
         </div>

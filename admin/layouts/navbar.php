@@ -20,10 +20,10 @@
                                 foreach ($contacts as $contact) {
                             ?>
                             <li>
-                                <a href="contact-module.php?page=Contacts&action=show&id=<?= $contact['id']?>">
+                                <a href="contact-module.php?action=show&id=<?= $contact['id']?>">
                                     <h4>
                                         <?= $contact['name']?>
-                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                        <small><i class="fa fa-clock-o"></i><?= $contact['created_at'] ?></small>
                                     </h4>
                                     <p><?= substr($contact['msg'], 0, 25) ?>...</p>
                                 </a>
@@ -33,7 +33,7 @@
                             ?>
                         </ul>
                     </li>
-                    <li class="footer"><a href="contact-module.php?page=Contacts">See All Messages</a></li>
+                    <li class="footer"><a href="contact-module.php">See All Messages</a></li>
                 </ul>
             </li>
             <li class="dropdown tasks-menu">
@@ -53,7 +53,7 @@
                             foreach ($todo as $todo_item) {
                             ?>
                             <li>
-                                <a href="todo-module.php?page=Todo&action=show&id=<?= $todo_item['id']?>">
+                                <a href="todo_list-module.php?action=show&id=<?= $todo_item['id']?>">
                                     <h3>
                                         <?= $todo_item['todo']?>
                                         <span class="pull-right"><?php ($todo_item['done']) ? print '&check' : print '&times'?></span>
@@ -69,12 +69,12 @@
                         </ul>
                     </li>
                     <li class="footer">
-                        <a href="todo-module.php?page=Todo">View all tasks</a>
+                        <a href="todo_list-module.php">View all tasks</a>
                     </li>
                 </ul>
             </li>
             <li class="dropdown user user-menu">
-                <a href="profile-module.php?page=Profile" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="profile-module.php" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="../img/<?= $user['photo']?>" class="user-image" alt="User Image"/>
                     <span class="hidden-xs"><?= $user['username']?></span>
                 </a>
@@ -88,18 +88,18 @@
                     </li>
                     <li class="user-body">
                         <div class="col-xs-4 text-center">
-                            <a href="menus-module.php?page=Products">Products</a>
+                            <a href="menus-module.php">Products</a>
                         </div>
                         <div class="col-xs-4 text-center">
-                            <a href="contact-module.php?page=Contacts">Contacts</a>
+                            <a href="contact-module.php">Contacts</a>
                         </div>
                         <div class="col-xs-4 text-center">
-                            <a href="todo_list-module.php?page=Todo">Todo</a>
+                            <a href="todo_list-module.php">Todo</a>
                         </div>
                     </li>
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="profile-module.php?page=Profile" class="btn btn-default btn-flat">Profile</a>
+                            <a href="profile-module.php" class="btn btn-default btn-flat">Profile</a>
                         </div>
                         <div class="pull-right">
                             <a href="#" class="btn btn-default btn-flat">Sign out</a>

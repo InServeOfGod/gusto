@@ -67,7 +67,7 @@ class DatabaseUpdater
      */
     public function contact(array $data): bool
     {
-        return $this->executor("UPDATE contact SET name = ?, email = ?, msg = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE contact SET name = ?, email = ?, msg = ?, created_at = ? WHERE id = ?", $data);
     }
 
     /**
@@ -139,7 +139,7 @@ class DatabaseUpdater
      */
     public function user(array $data): bool
     {
-        return $this->executor("UPDATE user SET username = ?, password = ?, updated_at = current_timestamp(), photo = ? WHERE id = ?", $data);
+        return $this->executor("UPDATE user SET username = ?, password = ?, photo = ? WHERE id = ?", $data);
     }
 
     /**
