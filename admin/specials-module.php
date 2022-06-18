@@ -20,6 +20,17 @@ $specials = $database->getSpecials();
     ?>
 
     <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active"><?= $_GET['page'] ?? null?></li>
+            </ol>
+        </section>
+
         <?php
         $self = htmlspecialchars($_SERVER['PHP_SELF']);
         ?>
