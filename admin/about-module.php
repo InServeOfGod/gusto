@@ -19,6 +19,17 @@ $head = $database->getAbout();
     ?>
 
     <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active"><?= $_GET['page'] ?? null?></li>
+            </ol>
+        </section>
+
         <?php
         $self = htmlspecialchars($_SERVER['PHP_SELF']);
 
@@ -119,31 +130,33 @@ $head = $database->getAbout();
             } else {
         ?>
 
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">About Table</h3>
+        <section class="content">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">About Table</h3>
+                </div>
+                <div class="box-body">
+                    <table id="datatable" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Story</th>
+                            <th>Photo</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><p><?= $head['story']?></p></td>
+                            <td><a href="../img/<?= $head['photo']?>"><img src="../img/<?= $head['photo']?>" alt="" width="80" height="80" class="img-rounded"></a></td>
+                            <td>
+                                <a href="<?=$self?>?action=edit&id=<?= $head['id']?>" class="btn btn-warning btn-sm col-1">Edit</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="box-body">
-                <table id="datatable" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>Story</th>
-                        <th>Photo</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><p><?= $head['story']?></p></td>
-                        <td><a href="../img/<?= $head['photo']?>"><img src="../img/<?= $head['photo']?>" alt="" width="80" height="80" class="img-rounded"></a></td>
-                        <td>
-                            <a href="<?=$self?>?action=edit&id=<?= $head['id']?>" class="btn btn-warning btn-sm col-1">Edit</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </section>
 
         <?php
             }

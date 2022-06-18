@@ -12,11 +12,16 @@ $fetcher->user();
 $fetcher->menus();
 $fetcher->contact();
 $fetcher->todo();
+$fetcher->visitors();
+$fetcher->profits();
 
 $user = $database->getUser();
 $menus = $database->getMenus();
 $contacts = $database->getContact();
 $todo = $database->getTodo();
+$visitors = $database->getVisitors();
+$profits = $database->getProfits();
+
 ?>
 
 <!DOCTYPE html>

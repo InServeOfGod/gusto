@@ -44,8 +44,18 @@ include_once "layouts/header.php";
                 </div>
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-green">
+                        <?php
+                            // calculate profit
+                            $money = 0;
+
+                            foreach ($profits as $profit) {
+                                $money += $profit['profit'];
+                                $money -= $profit['loss'];
+                            }
+                        ?>
+
                         <div class="inner">
-                            <h3>+0<sup style="font-size: 20px">$</sup></h3>
+                            <h3><?= ($money < 0) ? '-' : '+', $money ?><sup style="font-size: 20px">$</sup></h3>
                             <p>Profit</p>
                         </div>
                         <div class="icon">
@@ -69,7 +79,7 @@ include_once "layouts/header.php";
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>0</h3>
+                            <h3><?= count($visitors);?></h3>
                             <p>Unique Visitors</p>
                         </div>
                         <div class="icon">
@@ -133,10 +143,10 @@ include_once "layouts/header.php";
                                 ?>
                                 <li class="item">
                                     <div class="product-info">
-                                        <a href="menus-module.php?action=show&id=<?= $menu['id']?>" class="product-title">
+                                        <span class="product-title text-primary">
                                             <?= $menu['title']?>
                                             <span class="label label-primary pull-right">$<?= $menu['price']?></span>
-                                        </a>
+                                        </span>
                                         <span class="product-description"><?= substr($menu['description'], 0, 50)?>...</span>
                                     </div>
                                 </li>

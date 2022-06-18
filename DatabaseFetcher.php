@@ -133,7 +133,7 @@ class DatabaseFetcher {
      * @return void
      */
     public function profits() {
-        $this->database->setTodo($this->executor("SELECT * FROM profits", true));
+        $this->database->setProfits($this->executor("SELECT * FROM profits", true));
     }
 
     /**

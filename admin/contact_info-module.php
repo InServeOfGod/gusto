@@ -19,6 +19,17 @@ $contactInfo = $database->getContactInfo();
     ?>
 
     <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active"><?= $_GET['page'] ?? null?></li>
+            </ol>
+        </section>
+
         <?php
         $self = htmlspecialchars($_SERVER['PHP_SELF']);
         $action = $_GET['action'] ?? null;
@@ -104,6 +115,7 @@ $contactInfo = $database->getContactInfo();
         } else {
             ?>
 
+            <section class="content">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Phone Table</h3>
@@ -136,6 +148,7 @@ $contactInfo = $database->getContactInfo();
                     </table>
                 </div>
             </div>
+            </section>
 
             <?php
         }
